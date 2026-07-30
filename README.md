@@ -1,6 +1,7 @@
 # RepoReady
 
 [![CI](https://github.com/kanuwrld/repoready/actions/workflows/ci.yml/badge.svg)](https://github.com/kanuwrld/repoready/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/kanuwrld/repoready)](https://github.com/kanuwrld/repoready/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-0a7f5a.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776ab.svg)](pyproject.toml)
 
@@ -33,12 +34,15 @@ PASS  12  Continuous integration  .github/workflows/ci.yml
 
 ## Quick start
 
-Run from a checkout:
+Install the versioned wheel without cloning the repository:
 
 ```bash
-python -m pip install .
+python -m pip install "https://github.com/kanuwrld/repoready/releases/download/v0.1.0/repoready-0.1.0-py3-none-any.whl"
 repoready .
 ```
+
+For local development, clone the repository and run
+`python -m pip install -e .` instead.
 
 Fail CI when score is below a chosen threshold:
 
