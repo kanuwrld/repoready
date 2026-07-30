@@ -19,6 +19,10 @@ inputs:
     description: Output format: text, json, or markdown
     required: false
     default: text
+  output:
+    description: Destination path, or - for stdout
+    required: false
+    default: "-"
 
 runs:
   using: composite
@@ -30,8 +34,10 @@ runs:
         REPOREADY_INPUT_PATH: ${{ inputs.path }}
         REPOREADY_INPUT_SCORE: ${{ inputs.min-score }}
         REPOREADY_INPUT_FORMAT: ${{ inputs.format }}
+        REPOREADY_INPUT_OUTPUT: ${{ inputs.output }}
       run: |
         export PYTHONPATH="${REPOREADY_ACTION_PATH}/src${PYTHONPATH:+:${PYTHONPATH}}"
         python -m repoready "${REPOREADY_INPUT_PATH}" \
           --min-score "${REPOREADY_INPUT_SCORE}" \
-          --format "${REPOREADY_INPUT_FORMAT}"
+          --format "${REPOREADY_INPUT_FORMAT}" \
+          --output "${REPOREADY_INPUT_OUTPUT}"

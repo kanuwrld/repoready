@@ -49,6 +49,51 @@ class CliTests(unittest.TestCase):
         self.assertEqual(exit_code, 0)
         self.assertIn("| Status | Check | Points | Detail |", stdout.getvalue())
 
+    def test_writes_selected_format_to_output_file(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "reports" / "repoready.md"
+            destination.parent.mkdir()
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                exit_code = main(
+                    [
+                        directory,
+                        "--format",
+                        "markdown",
+                        "--min-score",
+                        "0",
+                        "--output",
+                        str(destination),
+                    ]
+                )
+
+            output = destination.read_text(encoding="utf-8")
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(stdout.getvalue(), "")
+        self.assertTrue(output.startswith("## RepoReady:"))
+        self.assertTrue(output.endswith("\n"))
+        self.assertFalse(output.endswith("\n\n"))
+
+    def test_output_file_requires_existing_parent(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "missing" / "report.json"
+            stderr = io.StringIO()
+            with contextlib.redirect_stderr(stderr):
+                with self.assertRaises(SystemExit) as raised:
+                    main(
+                        [
+                            directory,
+                            "--format",
+                            "json",
+                            "--output",
+                            str(destination),
+                        ]
+                    )
+
+        self.assertEqual(raised.exception.code, 2)
+        self.assertIn("Could not write report", stderr.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()
