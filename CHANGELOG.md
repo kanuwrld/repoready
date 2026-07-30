@@ -10,6 +10,7 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Repository audit engine with 13 weighted checks.
 - Text, JSON, and GitHub-flavored Markdown renderers.
 - Configurable minimum score and stable exit codes.
+- Explicit UTF-8 report files through `--output PATH`.
 - Composite GitHub Action.
 - CI matrix and tag-driven GitHub Release workflow.
 

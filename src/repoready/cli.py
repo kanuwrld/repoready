@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import sys
 from collections.abc import Sequence
+from pathlib import Path
 
 from . import __version__
 from .checks import audit_repository
@@ -45,6 +46,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="minimum score required for exit code 0 (default: 80)",
     )
     parser.add_argument(
+        "--output",
+        default="-",
+        metavar="PATH",
+        help="write report to PATH instead of stdout; use - for stdout (default: -)",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -67,7 +74,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         "text": render_text,
     }
     renderer = renderers[args.format]
-    print(renderer(report))
+    output = renderer(report)
+    if args.output == "-":
+        print(output)
+    else:
+        destination = Path(args.output).expanduser()
+        try:
+            destination.write_text(f"{output}\n", encoding="utf-8")
+        except OSError as error:
+            parser.error(f"Could not write report to {destination}: {error}")
+
     return 0 if report.passes_threshold else 1
 
 

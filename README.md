@@ -58,6 +58,15 @@ Write a pull request or GitHub Actions job summary:
 repoready . --format markdown >> "$GITHUB_STEP_SUMMARY"
 ```
 
+Write output directly without shell redirection:
+
+```bash
+repoready . --format json --output reports/repoready.json
+```
+
+RepoReady does not create missing parent directories. Write failures return exit
+code `2` with the destination path and operating-system error.
+
 Exit codes:
 
 | Code | Meaning |
