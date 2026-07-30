@@ -16,7 +16,7 @@ inputs:
     required: false
     default: "80"
   format:
-    description: Output format, either text or json
+    description: Output format: text, json, or markdown
     required: false
     default: text
 

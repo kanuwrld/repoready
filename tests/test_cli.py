@@ -38,6 +38,17 @@ class CliTests(unittest.TestCase):
         self.assertEqual(exit_code, 0)
         self.assertIn('"passes": true', stdout.getvalue())
 
+    def test_markdown_format(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                exit_code = main(
+                    [directory, "--format", "markdown", "--min-score", "0"]
+                )
+
+        self.assertEqual(exit_code, 0)
+        self.assertIn("| Status | Check | Points | Detail |", stdout.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()
