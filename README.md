@@ -96,12 +96,12 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - uses: kanuwrld/repoready@v1
+      - uses: kanuwrld/repoready@v0.1.0
         with:
           min-score: "80"
 ```
 
-Until the first stable tag, pin the action to a commit SHA.
+For the strongest supply-chain guarantee, pin the action to a full commit SHA.
 
 ## Scoring
 
