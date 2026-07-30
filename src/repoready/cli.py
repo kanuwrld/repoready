@@ -8,7 +8,7 @@ from collections.abc import Sequence
 
 from . import __version__
 from .checks import audit_repository
-from .renderers import render_json, render_text
+from .renderers import render_json, render_markdown, render_text
 
 
 def _score(value: str) -> int:
@@ -34,7 +34,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--format",
-        choices=("text", "json"),
+        choices=("text", "json", "markdown"),
         default="text",
         help="report format (default: text)",
     )
@@ -61,7 +61,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     except (FileNotFoundError, NotADirectoryError, OSError, ValueError) as error:
         parser.error(str(error))
 
-    renderer = render_json if args.format == "json" else render_text
+    renderers = {
+        "json": render_json,
+        "markdown": render_markdown,
+        "text": render_text,
+    }
+    renderer = renderers[args.format]
     print(renderer(report))
     return 0 if report.passes_threshold else 1
 

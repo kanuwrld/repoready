@@ -52,6 +52,12 @@ Get machine-readable output:
 repoready . --format json > repoready.json
 ```
 
+Write a pull request or GitHub Actions job summary:
+
+```bash
+repoready . --format markdown >> "$GITHUB_STEP_SUMMARY"
+```
+
 Exit codes:
 
 | Code | Meaning |
@@ -123,7 +129,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for workflow and review expectations.
 
 ## Roadmap
 
-- Markdown reports for pull request summaries
 - Configurable weights and required checks
 - SARIF output for GitHub code scanning
 - Ecosystem-specific rule packs
