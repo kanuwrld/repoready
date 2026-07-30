@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "repoready"
+version = "0.1.0"
+description = "Zero-dependency repository readiness auditor and GitHub Action"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+  { name = "kanuwrld contributors" },
+]
+keywords = [
+  "github",
+  "repository",
+  "audit",
+  "open-source",
+  "ci",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/kanuwrld/repoready"
+Issues = "https://github.com/kanuwrld/repoready/issues"
+Changelog = "https://github.com/kanuwrld/repoready/blob/main/CHANGELOG.md"
+
+[project.scripts]
+repoready = "repoready.cli:entrypoint"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,37 @@
+name: RepoReady
+description: Score repository readiness and fail below a chosen threshold
+author: kanuwrld contributors
+
+branding:
+  icon: check-circle
+  color: green
+
+inputs:
+  path:
+    description: Repository path to audit
+    required: false
+    default: .
+  min-score:
+    description: Minimum accepted score from 0 to 100
+    required: false
+    default: "80"
+  format:
+    description: Output format, either text or json
+    required: false
+    default: text
+
+runs:
+  using: composite
+  steps:
+    - name: Audit repository
+      shell: bash
+      env:
+        REPOREADY_ACTION_PATH: ${{ github.action_path }}
+        REPOREADY_INPUT_PATH: ${{ inputs.path }}
+        REPOREADY_INPUT_SCORE: ${{ inputs.min-score }}
+        REPOREADY_INPUT_FORMAT: ${{ inputs.format }}
+      run: |
+        export PYTHONPATH="${REPOREADY_ACTION_PATH}/src${PYTHONPATH:+:${PYTHONPATH}}"
+        python -m repoready "${REPOREADY_INPUT_PATH}" \
+          --min-score "${REPOREADY_INPUT_SCORE}" \
+          --format "${REPOREADY_INPUT_FORMAT}"
